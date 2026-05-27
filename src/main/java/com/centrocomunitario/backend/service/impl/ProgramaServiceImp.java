@@ -1,0 +1,76 @@
+package com.centrocomunitario.backend.service.impl;
+
+import com.centrocomunitario.backend.model.ProgramaModel;
+import com.centrocomunitario.backend.repository.IProgramas;
+import com.centrocomunitario.backend.service.interfaces.IProgramaService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
+@Service
+@RequiredArgsConstructor
+public class ProgramaServiceImp implements IProgramaService {
+
+    private final IProgramas programaRepository;
+
+    @Override
+    public ProgramaModel crear(ProgramaModel programa) {
+        if (programa.getFechaFin().isBefore(programa.getFechaInicio())) {
+            throw new IllegalArgumentException("La fecha de fin no puede ser anterior a la fecha de inicio");
+        }
+        return programaRepository.save(programa);
+    }
+
+    @Override
+    public List<ProgramaModel> listarTodos() {
+        return programaRepository.findAll();
+    }
+
+    @Override
+    public Optional<ProgramaModel> buscarPorId(String id) {
+        return programaRepository.findById(id);
+    }
+
+    @Override
+    public List<ProgramaModel> buscarPorEstado(String estado) {
+        return programaRepository.findByEstado(estado);
+    }
+
+    @Override
+    public List<ProgramaModel> buscarPorNombre(String nombre) {
+        return programaRepository.buscarPorNombre(nombre);
+    }
+
+    @Override
+    public List<ProgramaModel> buscarPorResponsable(String responsableId) {
+        return programaRepository.findByResponsablesIdContaining(responsableId);
+    }
+
+    @Override
+    public ProgramaModel actualizar(String id, ProgramaModel programa) {
+        ProgramaModel existente = programaRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Programa no encontrado con id: " + id));
+
+        existente.setNombre(programa.getNombre());
+        existente.setDescripcion(programa.getDescripcion());
+        existente.setFechaInicio(programa.getFechaInicio());
+        existente.setFechaFin(programa.getFechaFin());
+        existente.setPoblacionObjetivo(programa.getPoblacionObjetivo());
+        existente.setEstado(programa.getEstado());
+        existente.setResponsablesId(programa.getResponsablesId());
+        existente.setActividadesId(programa.getActividadesId());
+
+        return programaRepository.save(existente);
+    }
+
+    @Override
+    public void eliminar(String id) {
+        if (!programaRepository.existsById(id)) {
+            throw new NoSuchElementException("Programa no encontrado con id: " + id);
+        }
+        programaRepository.deleteById(id);
+    }
+}
