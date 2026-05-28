@@ -1,22 +1,12 @@
 {
   "info": {
+    "_postman_id": "7042be6d-e687-44f2-92bd-3b572b12a637",
     "name": "CentroComunitario",
-    "_postman_id": "centro-comunitario-v2",
     "description": "Colección completa CRUD + operaciones especiales.\nBase URL: http://localhost:8080/centrocomunitario/api\n\nVARIABLES DE ENTORNO:\n- base_url\n- usuario_id\n- actividad_id\n- sesion_id\n- inscripcion_id\n- evaluacion_id\n- programa_id\n- anuncio_id",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53341600"
   },
-  "variable": [
-    { "key": "base_url",       "value": "http://localhost:8080/centrocomunitario/api" },
-    { "key": "usuario_id",     "value": "REEMPLAZA_CON_ID_REAL" },
-    { "key": "actividad_id",   "value": "REEMPLAZA_CON_ID_REAL" },
-    { "key": "sesion_id",      "value": "REEMPLAZA_CON_ID_REAL" },
-    { "key": "inscripcion_id", "value": "REEMPLAZA_CON_ID_REAL" },
-    { "key": "evaluacion_id",  "value": "REEMPLAZA_CON_ID_REAL" },
-    { "key": "programa_id",    "value": "REEMPLAZA_CON_ID_REAL" },
-    { "key": "anuncio_id",     "value": "REEMPLAZA_CON_ID_REAL" }
-  ],
   "item": [
-
     {
       "name": " Usuarios",
       "item": [
@@ -24,55 +14,124 @@
           "name": "1. Insertar Usuario",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/usuarios/insertar", "host": ["{{base_url}}"], "path": ["usuarios","insertar"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"nombreCompleto\": \"Carlos Andrés Pérez\",\n  \"documentoId\": \"1234567890\",\n  \"edad\": 28,\n  \"correo\": \"carlos.perez@email.com\",\n  \"telefono\": \"3001234567\",\n  \"direccion\": \"Calle 10 # 5-30, Cali\",\n  \"rol\": \"participante\",\n  \"estado\": \"activo\",\n  \"fechaRegistro\": \"2025-01-15\",\n  \"notificaciones\": [\n    {\n      \"mensaje\": \"Bienvenido al Centro Comunitario\",\n      \"fecha\": \"2025-01-15\",\n      \"leida\": false\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/usuarios/insertar",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "usuarios",
+                "insertar"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "2. Listar Usuarios",
           "request": {
             "method": "GET",
-            "url": { "raw": "{{base_url}}/usuarios/listar", "host": ["{{base_url}}"], "path": ["usuarios","listar"] }
-          }
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/usuarios/listar",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "usuarios",
+                "listar"
+              ]
+            }
+          },
+          "response": []
         },
         {
           "name": "3. Buscar Usuario por ID",
           "request": {
             "method": "GET",
-            "url": { "raw": "{{base_url}}/usuarios/buscar/{{usuario_id}}", "host": ["{{base_url}}"], "path": ["usuarios","buscar","{{usuario_id}}"] }
-          }
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/usuarios/buscar/{{usuario_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "usuarios",
+                "buscar",
+                "{{usuario_id}}"
+              ]
+            }
+          },
+          "response": []
         },
         {
           "name": "4. Actualizar Usuario (edición completa)",
           "request": {
             "method": "PUT",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/usuarios/actualizar/{{usuario_id}}", "host": ["{{base_url}}"], "path": ["usuarios","actualizar","{{usuario_id}}"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"nombreCompleto\": \"Carlos Andrés Pérez Ruiz\",\n  \"documentoId\": \"1234567890\",\n  \"edad\": 29,\n  \"correo\": \"carlos.perez.ruiz@email.com\",\n  \"telefono\": \"3009876543\",\n  \"direccion\": \"Carrera 5 # 10-20, Cali\",\n  \"rol\": \"instructor\",\n  \"estado\": \"activo\",\n  \"fechaRegistro\": \"2025-01-15\",\n  \"notificaciones\": [\n    {\n      \"mensaje\": \"Tu perfil ha sido actualizado\",\n      \"fecha\": \"2025-03-01\",\n      \"leida\": false\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/usuarios/actualizar/{{usuario_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "usuarios",
+                "actualizar",
+                "{{usuario_id}}"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "4b.  Soft Delete - Desactivar Usuario",
           "request": {
             "method": "PUT",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/usuarios/actualizar/{{usuario_id}}", "host": ["{{base_url}}"], "path": ["usuarios","actualizar","{{usuario_id}}"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"nombreCompleto\": \"Carlos Andrés Pérez Ruiz\",\n  \"documentoId\": \"1234567890\",\n  \"edad\": 29,\n  \"correo\": \"carlos.perez.ruiz@email.com\",\n  \"telefono\": \"3009876543\",\n  \"direccion\": \"Carrera 5 # 10-20, Cali\",\n  \"rol\": \"participante\",\n  \"estado\": \"inactivo\",\n  \"fechaRegistro\": \"2025-01-15\",\n  \"notificaciones\": [\n    {\n      \"mensaje\": \"Tu cuenta ha sido desactivada\",\n      \"fecha\": \"2025-06-01\",\n      \"leida\": false\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/usuarios/actualizar/{{usuario_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "usuarios",
+                "actualizar",
+                "{{usuario_id}}"
+              ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
-
     {
       "name": " Actividades",
       "item": [
@@ -80,67 +139,152 @@
           "name": "1. Insertar Actividad",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/actividades/insertar", "host": ["{{base_url}}"], "path": ["actividades","insertar"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"nombre\": \"Taller de Pintura Acuarela\",\n  \"categoria\": \"arte\",\n  \"descripcion\": \"Aprende técnicas básicas y avanzadas de pintura en acuarela\",\n  \"objetivo\": \"Desarrollar habilidades artísticas en los participantes\",\n  \"fechaInicio\": \"2025-03-01\",\n  \"fechaFin\": \"2025-05-30\",\n  \"intensidadHoras\": 40.0,\n  \"cupoMaximo\": 20,\n  \"cuposDisponibles\": 20,\n  \"estado\": \"pendiente_revision\",\n  \"propuestoPor\": \"{{usuario_id}}\",\n  \"recursosRequeridos\": [\n    {\n      \"nombre\": \"Pinceles\",\n      \"cantidad\": 20,\n      \"tipo\": \"material\",\n      \"descripcion\": \"Pinceles de diferentes tamaños\",\n      \"ubicacion\": \"Bodega A\",\n      \"estado\": \"disponible\"\n    },\n    {\n      \"nombre\": \"Papel acuarela 300g\",\n      \"cantidad\": 100,\n      \"tipo\": \"material\",\n      \"descripcion\": \"Papel especial para técnica húmedo sobre húmedo\",\n      \"ubicacion\": \"Bodega A\",\n      \"estado\": \"disponible\"\n    }\n  ],\n  \"sesionesId\": [],\n  \"fechaCreacion\": \"2025-01-20\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/actividades/insertar",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "actividades",
+                "insertar"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "2. Listar Actividades",
           "request": {
             "method": "GET",
-            "url": { "raw": "{{base_url}}/actividades/listar", "host": ["{{base_url}}"], "path": ["actividades","listar"] }
-          }
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/actividades/listar",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "actividades",
+                "listar"
+              ]
+            }
+          },
+          "response": []
         },
         {
           "name": "3. Buscar Actividad por ID",
           "request": {
             "method": "GET",
-            "url": { "raw": "{{base_url}}/actividades/buscar/{{actividad_id}}", "host": ["{{base_url}}"], "path": ["actividades","buscar","{{actividad_id}}"] }
-          }
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/actividades/buscar/{{actividad_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "actividades",
+                "buscar",
+                "{{actividad_id}}"
+              ]
+            }
+          },
+          "response": []
         },
         {
           "name": "4. Actualizar Actividad (edición completa)",
           "request": {
             "method": "PUT",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/actividades/actualizar/{{actividad_id}}", "host": ["{{base_url}}"], "path": ["actividades","actualizar","{{actividad_id}}"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"nombre\": \"Taller de Pintura Acuarela - Avanzado\",\n  \"categoria\": \"arte\",\n  \"descripcion\": \"Técnicas avanzadas de acuarela para participantes con experiencia previa\",\n  \"objetivo\": \"Perfeccionar técnicas artísticas y preparar obras para exposición\",\n  \"fechaInicio\": \"2025-03-01\",\n  \"fechaFin\": \"2025-06-30\",\n  \"intensidadHoras\": 60.0,\n  \"cupoMaximo\": 15,\n  \"cuposDisponibles\": 12,\n  \"estado\": \"en_curso\",\n  \"propuestoPor\": \"{{usuario_id}}\",\n  \"recursosRequeridos\": [\n    {\n      \"nombre\": \"Pinceles profesionales\",\n      \"cantidad\": 15,\n      \"tipo\": \"material\",\n      \"descripcion\": \"Pinceles de pelo natural\",\n      \"ubicacion\": \"Bodega A\",\n      \"estado\": \"disponible\"\n    }\n  ],\n  \"sesionesId\": [\"{{sesion_id}}\"],\n  \"fechaCreacion\": \"2025-01-20\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/actividades/actualizar/{{actividad_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "actividades",
+                "actualizar",
+                "{{actividad_id}}"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "4b.  Soft Delete - Cancelar Actividad",
           "request": {
             "method": "PUT",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/actividades/actualizar/{{actividad_id}}", "host": ["{{base_url}}"], "path": ["actividades","actualizar","{{actividad_id}}"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"nombre\": \"Taller de Pintura Acuarela\",\n  \"categoria\": \"arte\",\n  \"descripcion\": \"Aprende técnicas básicas y avanzadas de pintura en acuarela\",\n  \"objetivo\": \"Desarrollar habilidades artísticas en los participantes\",\n  \"fechaInicio\": \"2025-03-01\",\n  \"fechaFin\": \"2025-05-30\",\n  \"intensidadHoras\": 40.0,\n  \"cupoMaximo\": 20,\n  \"cuposDisponibles\": 20,\n  \"estado\": \"cancelada\",\n  \"propuestoPor\": \"{{usuario_id}}\",\n  \"recursosRequeridos\": [],\n  \"sesionesId\": [],\n  \"fechaCreacion\": \"2025-01-20\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/actividades/actualizar/{{actividad_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "actividades",
+                "actualizar",
+                "{{actividad_id}}"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": " Especial - Aprobar Actividad (Admin)",
+          "name": "Aprobar Actividad (Admin)",
           "request": {
             "method": "PATCH",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/actividades/actualizar/{{actividad_id}}", "host": ["{{base_url}}"], "path": ["actividades","actualizar","{{actividad_id}}"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"nombre\": \"Taller de Pintura Acuarela\",\n  \"categoria\": \"arte\",\n  \"descripcion\": \"Aprende técnicas básicas y avanzadas de pintura en acuarela\",\n  \"objetivo\": \"Desarrollar habilidades artísticas en los participantes\",\n  \"fechaInicio\": \"2025-03-01\",\n  \"fechaFin\": \"2025-05-30\",\n  \"intensidadHoras\": 40.0,\n  \"cupoMaximo\": 20,\n  \"cuposDisponibles\": 20,\n  \"estado\": \"aprobada\",\n  \"propuestoPor\": \"{{usuario_id}}\",\n  \"recursosRequeridos\": [],\n  \"sesionesId\": [],\n  \"fechaCreacion\": \"2025-01-20\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/actividades/actualizar/{{actividad_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "actividades",
+                "actualizar",
+                "{{actividad_id}}"
+              ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
-
     {
       "name": " Sesiones",
       "item": [
@@ -148,67 +292,152 @@
           "name": "1. Insertar Sesion",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/sesiones/insertar", "host": ["{{base_url}}"], "path": ["sesiones","insertar"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"actividadId\": \"{{actividad_id}}\",\n  \"numeroSesion\": 1,\n  \"fecha\": \"2025-03-05\",\n  \"horaInicio\": \"09:00\",\n  \"horaFin\": \"11:00\",\n  \"modalidad\": \"presencial\",\n  \"espacioOEnlace\": \"Salón 101 - Edificio Principal\",\n  \"observaciones\": \"Primera sesión introductoria. Traer materiales básicos.\",\n  \"estado\": \"programada\",\n  \"asistencia\": [\n    {\n      \"usuarioId\": \"{{usuario_id}}\",\n      \"convocado\": true,\n      \"asistio\": false,\n      \"horaEntrada\": null\n    }\n  ],\n  \"adjuntos\": [\n    {\n      \"nombre\": \"Guia_sesion1.pdf\",\n      \"tipo\": \"pdf\",\n      \"url\": \"https://drive.google.com/file/guia_sesion1\",\n      \"fechaCarga\": \"2025-03-01\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/sesiones/insertar",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "sesiones",
+                "insertar"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "2. Listar Sesiones",
           "request": {
             "method": "GET",
-            "url": { "raw": "{{base_url}}/sesiones/listar", "host": ["{{base_url}}"], "path": ["sesiones","listar"] }
-          }
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/sesiones/listar",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "sesiones",
+                "listar"
+              ]
+            }
+          },
+          "response": []
         },
         {
           "name": "3. Buscar Sesion por ID",
           "request": {
             "method": "GET",
-            "url": { "raw": "{{base_url}}/sesiones/buscar/{{sesion_id}}", "host": ["{{base_url}}"], "path": ["sesiones","buscar","{{sesion_id}}"] }
-          }
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/sesiones/buscar/{{sesion_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "sesiones",
+                "buscar",
+                "{{sesion_id}}"
+              ]
+            }
+          },
+          "response": []
         },
         {
           "name": "4. Actualizar Sesion (edición completa)",
           "request": {
             "method": "PUT",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/sesiones/actualizar/{{sesion_id}}", "host": ["{{base_url}}"], "path": ["sesiones","actualizar","{{sesion_id}}"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"actividadId\": \"{{actividad_id}}\",\n  \"numeroSesion\": 1,\n  \"fecha\": \"2025-03-05\",\n  \"horaInicio\": \"09:00\",\n  \"horaFin\": \"11:00\",\n  \"modalidad\": \"presencial\",\n  \"espacioOEnlace\": \"Salón 101 - Edificio Principal\",\n  \"observaciones\": \"Sesión dictada con normalidad. Excelente participación.\",\n  \"estado\": \"finalizada\",\n  \"asistencia\": [\n    {\n      \"usuarioId\": \"{{usuario_id}}\",\n      \"convocado\": true,\n      \"asistio\": true,\n      \"horaEntrada\": \"09:05\"\n    }\n  ],\n  \"adjuntos\": [\n    {\n      \"nombre\": \"Guia_sesion1.pdf\",\n      \"tipo\": \"pdf\",\n      \"url\": \"https://drive.google.com/file/guia_sesion1\",\n      \"fechaCarga\": \"2025-03-01\"\n    },\n    {\n      \"nombre\": \"Fotos_sesion1.zip\",\n      \"tipo\": \"fotografias\",\n      \"url\": \"https://drive.google.com/file/fotos_sesion1\",\n      \"fechaCarga\": \"2025-03-05\"\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/sesiones/actualizar/{{sesion_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "sesiones",
+                "actualizar",
+                "{{sesion_id}}"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "4b.  Soft Delete - Cancelar Sesion",
           "request": {
             "method": "PUT",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/sesiones/actualizar/{{sesion_id}}", "host": ["{{base_url}}"], "path": ["sesiones","actualizar","{{sesion_id}}"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"actividadId\": \"{{actividad_id}}\",\n  \"numeroSesion\": 1,\n  \"fecha\": \"2025-03-05\",\n  \"horaInicio\": \"09:00\",\n  \"horaFin\": \"11:00\",\n  \"modalidad\": \"presencial\",\n  \"espacioOEnlace\": \"Salón 101 - Edificio Principal\",\n  \"observaciones\": \"Sesión cancelada por falta de quórum.\",\n  \"estado\": \"cancelada\",\n  \"asistencia\": [],\n  \"adjuntos\": []\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/sesiones/actualizar/{{sesion_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "sesiones",
+                "actualizar",
+                "{{sesion_id}}"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
-          "name": " Especial - Registrar Asistencia",
+          "name": "Registrar Asistencia",
           "request": {
             "method": "PUT",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/sesiones/actualizar/{{sesion_id}}", "host": ["{{base_url}}"], "path": ["sesiones","actualizar","{{sesion_id}}"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"actividadId\": \"{{actividad_id}}\",\n  \"numeroSesion\": 1,\n  \"fecha\": \"2025-03-05\",\n  \"horaInicio\": \"09:00\",\n  \"horaFin\": \"11:00\",\n  \"modalidad\": \"presencial\",\n  \"espacioOEnlace\": \"Salón 101 - Edificio Principal\",\n  \"observaciones\": \"Lista de asistencia registrada al cierre de la sesión.\",\n  \"estado\": \"en_curso\",\n  \"asistencia\": [\n    {\n      \"usuarioId\": \"{{usuario_id}}\",\n      \"convocado\": true,\n      \"asistio\": true,\n      \"horaEntrada\": \"09:03\"\n    },\n    {\n      \"usuarioId\": \"REEMPLAZA_CON_OTRO_USUARIO_ID\",\n      \"convocado\": true,\n      \"asistio\": true,\n      \"horaEntrada\": \"09:10\"\n    },\n    {\n      \"usuarioId\": \"REEMPLAZA_CON_OTRO_USUARIO_ID_2\",\n      \"convocado\": true,\n      \"asistio\": false,\n      \"horaEntrada\": null\n    }\n  ],\n  \"adjuntos\": []\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/sesiones/actualizar/{{sesion_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "sesiones",
+                "actualizar",
+                "{{sesion_id}}"
+              ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
-
     {
       "name": " Inscripciones",
       "item": [
@@ -216,67 +445,151 @@
           "name": "1. Insertar Inscripcion",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/inscripciones/insertar", "host": ["{{base_url}}"], "path": ["inscripciones","insertar"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"usuarioId\": \"{{usuario_id}}\",\n  \"tipoInscripcion\": \"actividad\",\n  \"referenciaId\": \"{{actividad_id}}\",\n  \"fechaInscripcion\": \"2025-02-10\",\n  \"estado\": \"activa\",\n  \"fechaCancelacion\": null,\n  \"motivoCancelacion\": null,\n  \"progreso\": 0.0\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/inscripciones/insertar",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "inscripciones",
+                "insertar"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "1b.  Especial - Inscribir Participante a Programa",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/inscripciones/insertar", "host": ["{{base_url}}"], "path": ["inscripciones","insertar"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"usuarioId\": \"{{usuario_id}}\",\n  \"tipoInscripcion\": \"programa\",\n  \"referenciaId\": \"{{programa_id}}\",\n  \"fechaInscripcion\": \"2025-01-05\",\n  \"estado\": \"activa\",\n  \"fechaCancelacion\": null,\n  \"motivoCancelacion\": null,\n  \"progreso\": 0.0\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/inscripciones/insertar",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "inscripciones",
+                "insertar"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "2. Listar Inscripciones",
           "request": {
             "method": "GET",
-            "url": { "raw": "{{base_url}}/inscripciones/listar", "host": ["{{base_url}}"], "path": ["inscripciones","listar"] }
-          }
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/inscripciones/listar",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "inscripciones",
+                "listar"
+              ]
+            }
+          },
+          "response": []
         },
         {
           "name": "3. Buscar Inscripcion por ID",
           "request": {
             "method": "GET",
-            "url": { "raw": "{{base_url}}/inscripciones/buscar/{{inscripcion_id}}", "host": ["{{base_url}}"], "path": ["inscripciones","buscar","{{inscripcion_id}}"] }
-          }
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/inscripciones/buscar/{{inscripcion_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "inscripciones",
+                "buscar",
+                "{{inscripcion_id}}"
+              ]
+            }
+          },
+          "response": []
         },
         {
           "name": "4. Actualizar Inscripcion (edición completa)",
           "request": {
             "method": "PUT",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/inscripciones/actualizar/{{inscripcion_id}}", "host": ["{{base_url}}"], "path": ["inscripciones","actualizar","{{inscripcion_id}}"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"usuarioId\": \"{{usuario_id}}\",\n  \"tipoInscripcion\": \"actividad\",\n  \"referenciaId\": \"{{actividad_id}}\",\n  \"fechaInscripcion\": \"2025-02-10\",\n  \"estado\": \"completada\",\n  \"fechaCancelacion\": null,\n  \"motivoCancelacion\": null,\n  \"progreso\": 100.0\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/inscripciones/actualizar/{{inscripcion_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "inscripciones",
+                "actualizar",
+                "{{inscripcion_id}}"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "4b.  Soft Delete - Cancelar Inscripcion",
           "request": {
             "method": "PUT",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/inscripciones/actualizar/{{inscripcion_id}}", "host": ["{{base_url}}"], "path": ["inscripciones","actualizar","{{inscripcion_id}}"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"usuarioId\": \"{{usuario_id}}\",\n  \"tipoInscripcion\": \"actividad\",\n  \"referenciaId\": \"{{actividad_id}}\",\n  \"fechaInscripcion\": \"2025-02-10\",\n  \"estado\": \"cancelada\",\n  \"fechaCancelacion\": \"2025-03-01\",\n  \"motivoCancelacion\": \"El participante no puede continuar por motivos personales\",\n  \"progreso\": 25.0\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/inscripciones/actualizar/{{inscripcion_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "inscripciones",
+                "actualizar",
+                "{{inscripcion_id}}"
+              ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
-
     {
       "name": " Evaluaciones",
       "item": [
@@ -284,55 +597,123 @@
           "name": "1. Insertar Evaluacion",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/evaluaciones/insertar", "host": ["{{base_url}}"], "path": ["evaluaciones","insertar"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"tipo\": \"evaluacion_participante\",\n  \"autorId\": \"{{usuario_id}}\",\n  \"sujetoId\": \"{{usuario_id}}\",\n  \"actividadId\": \"{{actividad_id}}\",\n  \"sesionId\": \"{{sesion_id}}\",\n  \"valoracionNumerica\": 4.5,\n  \"observaciones\": \"El participante demostró gran interés y dedicación durante toda la sesión\",\n  \"sugerencias\": \"Podría mejorar la puntualidad al inicio de las sesiones\",\n  \"desempenio\": \"Excelente\",\n  \"compromiso\": \"Alto\",\n  \"progresoDescrito\": \"Domina las técnicas básicas; en proceso con las avanzadas\",\n  \"fecha\": \"2025-03-05\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/evaluaciones/insertar",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "evaluaciones",
+                "insertar"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "1b.  Especial - Agregar Valoracion al Finalizar Ciclo",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/evaluaciones/insertar", "host": ["{{base_url}}"], "path": ["evaluaciones","insertar"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"tipo\": \"evaluacion_instructor\",\n  \"autorId\": \"{{usuario_id}}\",\n  \"sujetoId\": \"{{usuario_id}}\",\n  \"actividadId\": \"{{actividad_id}}\",\n  \"sesionId\": null,\n  \"valoracionNumerica\": 5.0,\n  \"observaciones\": \"Instructor con excelente manejo del grupo y dominio del tema\",\n  \"sugerencias\": \"Incluir más recursos visuales en próximas sesiones\",\n  \"desempenio\": \"Sobresaliente\",\n  \"compromiso\": \"Muy Alto\",\n  \"progresoDescrito\": \"El instructor completó todos los objetivos del ciclo formativo\",\n  \"fecha\": \"2025-05-30\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/evaluaciones/insertar",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "evaluaciones",
+                "insertar"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "2. Listar Evaluaciones",
           "request": {
             "method": "GET",
-            "url": { "raw": "{{base_url}}/evaluaciones/listar", "host": ["{{base_url}}"], "path": ["evaluaciones","listar"] }
-          }
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/evaluaciones/listar",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "evaluaciones",
+                "listar"
+              ]
+            }
+          },
+          "response": []
         },
         {
           "name": "3. Buscar Evaluacion por ID",
           "request": {
             "method": "GET",
-            "url": { "raw": "{{base_url}}/evaluaciones/buscar/{{evaluacion_id}}", "host": ["{{base_url}}"], "path": ["evaluaciones","buscar","{{evaluacion_id}}"] }
-          }
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/evaluaciones/buscar/{{evaluacion_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "evaluaciones",
+                "buscar",
+                "{{evaluacion_id}}"
+              ]
+            }
+          },
+          "response": []
         },
         {
           "name": "4. Actualizar Evaluacion (edición completa)",
           "request": {
             "method": "PUT",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/evaluaciones/actualizar/{{evaluacion_id}}", "host": ["{{base_url}}"], "path": ["evaluaciones","actualizar","{{evaluacion_id}}"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"tipo\": \"evaluacion_participante\",\n  \"autorId\": \"{{usuario_id}}\",\n  \"sujetoId\": \"{{usuario_id}}\",\n  \"actividadId\": \"{{actividad_id}}\",\n  \"sesionId\": \"{{sesion_id}}\",\n  \"valoracionNumerica\": 5.0,\n  \"observaciones\": \"Revisión final: el participante superó todas las expectativas\",\n  \"sugerencias\": \"Ninguna. Continuar con el nivel avanzado\",\n  \"desempenio\": \"Sobresaliente\",\n  \"compromiso\": \"Muy Alto\",\n  \"progresoDescrito\": \"Domina completamente todas las técnicas del taller\",\n  \"fecha\": \"2025-05-30\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/evaluaciones/actualizar/{{evaluacion_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "evaluaciones",
+                "actualizar",
+                "{{evaluacion_id}}"
+              ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
-
     {
       "name": " Programas",
       "item": [
@@ -340,55 +721,124 @@
           "name": "1. Insertar Programa",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/programas/insertar", "host": ["{{base_url}}"], "path": ["programas","insertar"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"nombre\": \"Programa de Bienestar Integral 2025\",\n  \"descripcion\": \"Programa que integra actividades de salud, arte y deporte para toda la comunidad\",\n  \"fechaInicio\": \"2025-01-01\",\n  \"fechaFin\": \"2025-12-31\",\n  \"poblacionObjetivo\": \"Adultos y jóvenes entre 15 y 60 años\",\n  \"estado\": \"activo\",\n  \"fechaCreacion\": \"2024-11-01\",\n  \"responsablesId\": [\"{{usuario_id}}\"],\n  \"actividadesId\": [\"{{actividad_id}}\"]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/programas/insertar",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "programas",
+                "insertar"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "2. Listar Programas",
           "request": {
             "method": "GET",
-            "url": { "raw": "{{base_url}}/programas/listar", "host": ["{{base_url}}"], "path": ["programas","listar"] }
-          }
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/programas/listar",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "programas",
+                "listar"
+              ]
+            }
+          },
+          "response": []
         },
         {
           "name": "3. Buscar Programa por ID",
           "request": {
             "method": "GET",
-            "url": { "raw": "{{base_url}}/programas/buscar/{{programa_id}}", "host": ["{{base_url}}"], "path": ["programas","buscar","{{programa_id}}"] }
-          }
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/programas/buscar/{{programa_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "programas",
+                "buscar",
+                "{{programa_id}}"
+              ]
+            }
+          },
+          "response": []
         },
         {
           "name": "4. Actualizar Programa (edición completa)",
           "request": {
             "method": "PUT",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/programas/actualizar/{{programa_id}}", "host": ["{{base_url}}"], "path": ["programas","actualizar","{{programa_id}}"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"nombre\": \"Programa de Bienestar Integral 2025 - Ampliado\",\n  \"descripcion\": \"Programa ampliado con nuevas actividades de tecnología y emprendimiento\",\n  \"fechaInicio\": \"2025-01-01\",\n  \"fechaFin\": \"2025-12-31\",\n  \"poblacionObjetivo\": \"Toda la comunidad sin restricción de edad\",\n  \"estado\": \"activo\",\n  \"fechaCreacion\": \"2024-11-01\",\n  \"responsablesId\": [\"{{usuario_id}}\"],\n  \"actividadesId\": [\"{{actividad_id}}\"]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/programas/actualizar/{{programa_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "programas",
+                "actualizar",
+                "{{programa_id}}"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "4b.  Soft Delete - Finalizar Programa",
           "request": {
             "method": "PUT",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/programas/actualizar/{{programa_id}}", "host": ["{{base_url}}"], "path": ["programas","actualizar","{{programa_id}}"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"nombre\": \"Programa de Bienestar Integral 2025\",\n  \"descripcion\": \"Programa que integra actividades de salud, arte y deporte para toda la comunidad\",\n  \"fechaInicio\": \"2025-01-01\",\n  \"fechaFin\": \"2025-12-31\",\n  \"poblacionObjetivo\": \"Adultos y jóvenes entre 15 y 60 años\",\n  \"estado\": \"finalizado\",\n  \"fechaCreacion\": \"2024-11-01\",\n  \"responsablesId\": [\"{{usuario_id}}\"],\n  \"actividadesId\": [\"{{actividad_id}}\"]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/programas/actualizar/{{programa_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "programas",
+                "actualizar",
+                "{{programa_id}}"
+              ]
             }
-          }
+          },
+          "response": []
         }
       ]
     },
-
     {
       "name": " Anuncios y Foros",
       "item": [
@@ -396,73 +846,205 @@
           "name": "1. Insertar Anuncio-Foro",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/anuncios-foros/insertar", "host": ["{{base_url}}"], "path": ["anuncios-foros","insertar"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"tipo\": \"anuncio\",\n  \"titulo\": \"Inicio del Taller de Pintura - Marzo 2025\",\n  \"contenido\": \"Se informa a todos los inscritos que el taller de pintura acuarela comenzará el 5 de marzo. Confirmar asistencia antes del 3 de marzo.\",\n  \"fechaPublicacion\": \"2025-02-20\",\n  \"estado\": \"activo\",\n  \"autorId\": \"{{usuario_id}}\",\n  \"actividadId\": \"{{actividad_id}}\",\n  \"programaId\": null,\n  \"adjuntos\": [\n    {\n      \"nombre\": \"Cronograma_Taller.pdf\",\n      \"tipo\": \"pdf\",\n      \"url\": \"https://drive.google.com/file/cronograma\",\n      \"fechaCarga\": \"2025-02-20\"\n    }\n  ],\n  \"comentarios\": []\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/anuncios-foros/insertar",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "anuncios-foros",
+                "insertar"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "1b.  Especial - Agregar Comentario a Anuncio",
           "request": {
             "method": "POST",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/anuncios-foros/{{anuncio_id}}/comentarios/agregar", "host": ["{{base_url}}"], "path": ["anuncios-foros","{{anuncio_id}}","comentarios","agregar"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"comentarios\": \"{{usuario_id}}\",\n  \"autorId\": \"{{usuario_id}}\",\n  \"texto\": \"Confirmada mi asistencia al taller. ¡Muchas gracias por el aviso!\",\n  \"fecha\": \"2025-02-21\",\n  \"respuesta\": []\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/anuncios-foros/{{anuncio_id}}/comentarios/agregar",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "anuncios-foros",
+                "{{anuncio_id}}",
+                "comentarios",
+                "agregar"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "2. Listar Anuncios-Foros",
           "request": {
             "method": "GET",
-            "url": { "raw": "{{base_url}}/anuncios-foros/listar", "host": ["{{base_url}}"], "path": ["anuncios-foros","listar"] }
-          }
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/anuncios-foros/listar",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "anuncios-foros",
+                "listar"
+              ]
+            }
+          },
+          "response": []
         },
         {
           "name": "3. Buscar Anuncio-Foro por ID",
           "request": {
             "method": "GET",
-            "url": { "raw": "{{base_url}}/anuncios-foros/buscar/{{anuncio_id}}", "host": ["{{base_url}}"], "path": ["anuncios-foros","buscar","{{anuncio_id}}"] }
-          }
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/anuncios-foros/buscar/{{anuncio_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "anuncios-foros",
+                "buscar",
+                "{{anuncio_id}}"
+              ]
+            }
+          },
+          "response": []
         },
         {
           "name": "3b. Obtener Comentarios de un Anuncio",
           "request": {
             "method": "GET",
-            "url": { "raw": "{{base_url}}/anuncios-foros/{{anuncio_id}}/comentarios", "host": ["{{base_url}}"], "path": ["anuncios-foros","{{anuncio_id}}","comentarios"] }
-          }
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/anuncios-foros/{{anuncio_id}}/comentarios",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "anuncios-foros",
+                "{{anuncio_id}}",
+                "comentarios"
+              ]
+            }
+          },
+          "response": []
         },
         {
           "name": "4. Actualizar Anuncio-Foro (edición completa)",
           "request": {
             "method": "PUT",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/anuncios-foros/actualizar/{{anuncio_id}}", "host": ["{{base_url}}"], "path": ["anuncios-foros","actualizar","{{anuncio_id}}"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"tipo\": \"anuncio\",\n  \"titulo\": \"ACTUALIZADO - Inicio del Taller de Pintura - Marzo 2025\",\n  \"contenido\": \"CORRECCIÓN: El taller comenzará el 6 de marzo (un día después de lo previsto). Disculpen el inconveniente. El lugar y horario permanecen igual.\",\n  \"fechaPublicacion\": \"2025-02-20\",\n  \"estado\": \"activo\",\n  \"autorId\": \"{{usuario_id}}\",\n  \"actividadId\": \"{{actividad_id}}\",\n  \"programaId\": null,\n  \"adjuntos\": [\n    {\n      \"nombre\": \"Cronograma_Taller_v2.pdf\",\n      \"tipo\": \"pdf\",\n      \"url\": \"https://drive.google.com/file/cronograma_v2\",\n      \"fechaCarga\": \"2025-02-22\"\n    }\n  ],\n  \"comentarios\": []\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/anuncios-foros/actualizar/{{anuncio_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "anuncios-foros",
+                "actualizar",
+                "{{anuncio_id}}"
+              ]
             }
-          }
+          },
+          "response": []
         },
         {
           "name": "4b.  Soft Delete - Archivar Anuncio",
           "request": {
             "method": "PUT",
-            "header": [{ "key": "Content-Type", "value": "application/json" }],
-            "url": { "raw": "{{base_url}}/anuncios-foros/actualizar/{{anuncio_id}}", "host": ["{{base_url}}"], "path": ["anuncios-foros","actualizar","{{anuncio_id}}"] },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"tipo\": \"anuncio\",\n  \"titulo\": \"Inicio del Taller de Pintura - Marzo 2025\",\n  \"contenido\": \"Se informa a todos los inscritos que el taller de pintura acuarela comenzará el 5 de marzo.\",\n  \"fechaPublicacion\": \"2025-02-20\",\n  \"estado\": \"archivado\",\n  \"autorId\": \"{{usuario_id}}\",\n  \"actividadId\": \"{{actividad_id}}\",\n  \"programaId\": null,\n  \"adjuntos\": [],\n  \"comentarios\": []\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/anuncios-foros/actualizar/{{anuncio_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "anuncios-foros",
+                "actualizar",
+                "{{anuncio_id}}"
+              ]
             }
-          }
+          },
+          "response": []
         }
       ]
     }
-
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080/centrocomunitario/api"
+    },
+    {
+      "key": "usuario_id",
+      "value": "REEMPLAZA_CON_ID_REAL"
+    },
+    {
+      "key": "actividad_id",
+      "value": "REEMPLAZA_CON_ID_REAL"
+    },
+    {
+      "key": "sesion_id",
+      "value": "REEMPLAZA_CON_ID_REAL"
+    },
+    {
+      "key": "inscripcion_id",
+      "value": "REEMPLAZA_CON_ID_REAL"
+    },
+    {
+      "key": "evaluacion_id",
+      "value": "REEMPLAZA_CON_ID_REAL"
+    },
+    {
+      "key": "programa_id",
+      "value": "REEMPLAZA_CON_ID_REAL"
+    },
+    {
+      "key": "anuncio_id",
+      "value": "REEMPLAZA_CON_ID_REAL"
+    }
   ]
 }

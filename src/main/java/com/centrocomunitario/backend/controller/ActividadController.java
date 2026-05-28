@@ -41,30 +41,6 @@ public class ActividadController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // GET /actividades/buscar/categoria/{categoria}
-    @GetMapping("/buscar/categoria/{categoria}")
-    public ResponseEntity<List<ActividadModel>> buscarPorCategoria(@PathVariable String categoria) {
-        return ResponseEntity.ok(actividadService.buscarPorCategoria(categoria));
-    }
-
-    // GET /actividades/buscar/estado/{estado}
-    @GetMapping("/buscar/estado/{estado}")
-    public ResponseEntity<List<ActividadModel>> buscarPorEstado(@PathVariable String estado) {
-        return ResponseEntity.ok(actividadService.buscarPorEstado(estado));
-    }
-
-    // GET /actividades/buscar/nombre/{nombre}
-    @GetMapping("/buscar/nombre/{nombre}")
-    public ResponseEntity<List<ActividadModel>> buscarPorNombre(@PathVariable String nombre) {
-        return ResponseEntity.ok(actividadService.buscarPorNombre(nombre));
-    }
-
-    // GET /actividades/cupos-disponibles
-    @GetMapping("/cupos-disponibles")
-    public ResponseEntity<List<ActividadModel>> listarConCupos() {
-        return ResponseEntity.ok(actividadService.listarConCuposDisponibles());
-    }
-
     // PUT /actividades/actualizar/{id}
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<ActividadModel> actualizar(
@@ -73,10 +49,10 @@ public class ActividadController {
         return ResponseEntity.ok(actividadService.actualizar(id, actividad));
     }
 
-    // DELETE /actividades/eliminar/{id}
-    @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable String id) {
-        actividadService.eliminar(id);
-        return ResponseEntity.noContent().build();
-    }
+//    // DELETE /actividades/eliminar/{id}
+//    @DeleteMapping("/eliminar/{id}")
+//    public ResponseEntity<Void> eliminar(@PathVariable String id) {
+//        actividadService.eliminar(id);
+//        return ResponseEntity.noContent().build();
+//    }
 }

@@ -41,30 +41,6 @@ public class EvaluacionController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // GET /evaluaciones/buscar/autor/{autorId}
-    @GetMapping("/buscar/autor/{autorId}")
-    public ResponseEntity<List<EvaluacionModel>> buscarPorAutor(@PathVariable String autorId) {
-        return ResponseEntity.ok(evaluacionService.buscarPorAutor(autorId));
-    }
-
-    // GET /evaluaciones/buscar/sujeto/{sujetoId}
-    @GetMapping("/buscar/sujeto/{sujetoId}")
-    public ResponseEntity<List<EvaluacionModel>> buscarPorSujeto(@PathVariable String sujetoId) {
-        return ResponseEntity.ok(evaluacionService.buscarPorSujeto(sujetoId));
-    }
-
-    // GET /evaluaciones/buscar/actividad/{actividadId}
-    @GetMapping("/buscar/actividad/{actividadId}")
-    public ResponseEntity<List<EvaluacionModel>> buscarPorActividad(@PathVariable String actividadId) {
-        return ResponseEntity.ok(evaluacionService.buscarPorActividad(actividadId));
-    }
-
-    // GET /evaluaciones/buscar/tipo/{tipo}
-    @GetMapping("/buscar/tipo/{tipo}")
-    public ResponseEntity<List<EvaluacionModel>> buscarPorTipo(@PathVariable String tipo) {
-        return ResponseEntity.ok(evaluacionService.buscarPorTipo(tipo));
-    }
-
     // PUT /evaluaciones/actualizar/{id}
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<EvaluacionModel> actualizar(
@@ -73,10 +49,10 @@ public class EvaluacionController {
         return ResponseEntity.ok(evaluacionService.actualizar(id, evaluacion));
     }
 
-    // DELETE /evaluaciones/eliminar/{id}
-    @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable String id) {
-        evaluacionService.eliminar(id);
-        return ResponseEntity.noContent().build();
-    }
+//    // DELETE /evaluaciones/eliminar/{id}
+//    @DeleteMapping("/eliminar/{id}")
+//    public ResponseEntity<Void> eliminar(@PathVariable String id) {
+//        evaluacionService.eliminar(id);
+//        return ResponseEntity.noContent().build();
+//    }
 }

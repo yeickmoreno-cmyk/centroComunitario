@@ -41,18 +41,6 @@ public class SesionController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // GET /sesiones/buscar/actividad/{actividadId}
-    @GetMapping("/buscar/actividad/{actividadId}")
-    public ResponseEntity<List<SesionModel>> buscarPorActividad(@PathVariable String actividadId) {
-        return ResponseEntity.ok(sesionService.buscarPorActividad(actividadId));
-    }
-
-    // GET /sesiones/buscar/estado/{estado}
-    @GetMapping("/buscar/estado/{estado}")
-    public ResponseEntity<List<SesionModel>> buscarPorEstado(@PathVariable String estado) {
-        return ResponseEntity.ok(sesionService.buscarPorEstado(estado));
-    }
-
     // PUT /sesiones/actualizar/{id}
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<SesionModel> actualizar(
@@ -61,10 +49,10 @@ public class SesionController {
         return ResponseEntity.ok(sesionService.actualizar(id, sesion));
     }
 
-    // DELETE /sesiones/eliminar/{id}
-    @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable String id) {
-        sesionService.eliminar(id);
-        return ResponseEntity.noContent().build();
-    }
+//    // DELETE /sesiones/eliminar/{id}
+//    @DeleteMapping("/eliminar/{id}")
+//    public ResponseEntity<Void> eliminar(@PathVariable String id) {
+//        sesionService.eliminar(id);
+//        return ResponseEntity.noContent().build();
+//    }
 }

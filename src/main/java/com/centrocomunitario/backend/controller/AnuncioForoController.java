@@ -42,30 +42,6 @@ public class AnuncioForoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // GET /anuncios-foros/buscar/tipo/{tipo}
-    @GetMapping("/buscar/tipo/{tipo}")
-    public ResponseEntity<List<AnuncioForoModel>> buscarPorTipo(@PathVariable String tipo) {
-        return ResponseEntity.ok(anuncioForoService.buscarPorTipo(tipo));
-    }
-
-    // GET /anuncios-foros/buscar/autor/{autorId}
-    @GetMapping("/buscar/autor/{autorId}")
-    public ResponseEntity<List<AnuncioForoModel>> buscarPorAutor(@PathVariable String autorId) {
-        return ResponseEntity.ok(anuncioForoService.buscarPorAutor(autorId));
-    }
-
-    // GET /anuncios-foros/buscar/actividad/{actividadId}
-    @GetMapping("/buscar/actividad/{actividadId}")
-    public ResponseEntity<List<AnuncioForoModel>> buscarPorActividad(@PathVariable String actividadId) {
-        return ResponseEntity.ok(anuncioForoService.buscarPorActividad(actividadId));
-    }
-
-    // GET /anuncios-foros/buscar/titulo/{titulo}
-    @GetMapping("/buscar/titulo/{titulo}")
-    public ResponseEntity<List<AnuncioForoModel>> buscarPorTitulo(@PathVariable String titulo) {
-        return ResponseEntity.ok(anuncioForoService.buscarPorTitulo(titulo));
-    }
-
     // GET /anuncios-foros/{id}/comentarios
     @GetMapping("/{id}/comentarios")
     public ResponseEntity<List<Comentario>> obtenerComentarios(@PathVariable String id) {
@@ -88,10 +64,10 @@ public class AnuncioForoController {
         return ResponseEntity.ok(anuncioForoService.actualizar(id, anuncio));
     }
 
-    // DELETE /anuncios-foros/eliminar/{id}
-    @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable String id) {
-        anuncioForoService.eliminar(id);
-        return ResponseEntity.noContent().build();
-    }
+//    // DELETE /anuncios-foros/eliminar/{id}
+//    @DeleteMapping("/eliminar/{id}")
+//    public ResponseEntity<Void> eliminar(@PathVariable String id) {
+//        anuncioForoService.eliminar(id);
+//        return ResponseEntity.noContent().build();
+//    }
 }

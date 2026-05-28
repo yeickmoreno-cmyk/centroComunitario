@@ -41,26 +41,6 @@ public class UsuarioController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // GET /usuarios/buscar/correo/{correo}
-    @GetMapping("/buscar/correo/{correo}")
-    public ResponseEntity<UsuarioModel> buscarPorCorreo(@PathVariable String correo) {
-        return usuarioService.buscarPorCorreo(correo)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    // GET /usuarios/buscar/rol/{rol}
-    @GetMapping("/buscar/rol/{rol}")
-    public ResponseEntity<List<UsuarioModel>> buscarPorRol(@PathVariable String rol) {
-        return ResponseEntity.ok(usuarioService.buscarPorRol(rol));
-    }
-
-    // GET /usuarios/buscar/nombre/{nombre}
-    @GetMapping("/buscar/nombre/{nombre}")
-    public ResponseEntity<List<UsuarioModel>> buscarPorNombre(@PathVariable String nombre) {
-        return ResponseEntity.ok(usuarioService.buscarPorNombre(nombre));
-    }
-
     // PUT /usuarios/actualizar/{id}
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<UsuarioModel> actualizar(
@@ -69,10 +49,10 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.actualizar(id, usuario));
     }
 
-    // DELETE /usuarios/eliminar/{id}
-    @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable String id) {
-        usuarioService.eliminar(id);
-        return ResponseEntity.noContent().build();
-    }
+//    // DELETE /usuarios/eliminar/{id}
+//    @DeleteMapping("/eliminar/{id}")
+//    public ResponseEntity<Void> eliminar(@PathVariable String id) {
+//        usuarioService.eliminar(id);
+//        return ResponseEntity.noContent().build();
+//    }
 }

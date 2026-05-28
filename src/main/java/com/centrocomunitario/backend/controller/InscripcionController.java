@@ -41,24 +41,6 @@ public class InscripcionController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // GET /inscripciones/buscar/usuario/{usuarioId}
-    @GetMapping("/buscar/usuario/{usuarioId}")
-    public ResponseEntity<List<InscripcionModel>> buscarPorUsuario(@PathVariable String usuarioId) {
-        return ResponseEntity.ok(inscripcionService.buscarPorUsuario(usuarioId));
-    }
-
-    // GET /inscripciones/buscar/referencia/{referenciaId}
-    @GetMapping("/buscar/referencia/{referenciaId}")
-    public ResponseEntity<List<InscripcionModel>> buscarPorReferencia(@PathVariable String referenciaId) {
-        return ResponseEntity.ok(inscripcionService.buscarPorReferencia(referenciaId));
-    }
-
-    // GET /inscripciones/buscar/estado/{estado}
-    @GetMapping("/buscar/estado/{estado}")
-    public ResponseEntity<List<InscripcionModel>> buscarPorEstado(@PathVariable String estado) {
-        return ResponseEntity.ok(inscripcionService.buscarPorEstado(estado));
-    }
-
     // PUT /inscripciones/actualizar/{id}
     @PutMapping("/actualizar/{id}")
     public ResponseEntity<InscripcionModel> actualizar(
@@ -67,10 +49,10 @@ public class InscripcionController {
         return ResponseEntity.ok(inscripcionService.actualizar(id, inscripcion));
     }
 
-    // DELETE /inscripciones/eliminar/{id}
-    @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<Void> eliminar(@PathVariable String id) {
-        inscripcionService.eliminar(id);
-        return ResponseEntity.noContent().build();
-    }
+//    // DELETE /inscripciones/eliminar/{id}
+//    @DeleteMapping("/eliminar/{id}")
+//    public ResponseEntity<Void> eliminar(@PathVariable String id) {
+//        inscripcionService.eliminar(id);
+//        return ResponseEntity.noContent().build();
+//    }
 }

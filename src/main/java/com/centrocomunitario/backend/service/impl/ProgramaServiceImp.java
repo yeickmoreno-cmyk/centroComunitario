@@ -1,11 +1,14 @@
 package com.centrocomunitario.backend.service.impl;
 
+import com.centrocomunitario.backend.model.InscripcionModel;
 import com.centrocomunitario.backend.model.ProgramaModel;
+import com.centrocomunitario.backend.repository.IInscripciones;
 import com.centrocomunitario.backend.repository.IProgramas;
 import com.centrocomunitario.backend.service.interfaces.IProgramaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -15,6 +18,7 @@ import java.util.Optional;
 public class ProgramaServiceImp implements IProgramaService {
 
     private final IProgramas programaRepository;
+    private final IInscripciones inscripcionRepository;
 
     @Override
     public ProgramaModel crear(ProgramaModel programa) {
@@ -54,6 +58,8 @@ public class ProgramaServiceImp implements IProgramaService {
         ProgramaModel existente = programaRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Programa no encontrado con id: " + id));
 
+        String estadoAnterior = existente.getEstado();
+
         existente.setNombre(programa.getNombre());
         existente.setDescripcion(programa.getDescripcion());
         existente.setFechaInicio(programa.getFechaInicio());
@@ -62,6 +68,18 @@ public class ProgramaServiceImp implements IProgramaService {
         existente.setEstado(programa.getEstado());
         existente.setResponsablesId(programa.getResponsablesId());
         existente.setActividadesId(programa.getActividadesId());
+
+        if (!"finalizado".equals(estadoAnterior) && "finalizado".equals(existente.getEstado())) {
+            List<InscripcionModel> inscripciones = inscripcionRepository.findByReferenciaId(id);
+            for (InscripcionModel inscripcion : inscripciones) {
+                if ("programa".equals(inscripcion.getTipoInscripcion()) && "activa".equals(inscripcion.getEstado())) {
+                    inscripcion.setEstado("cancelada");
+                    inscripcion.setFechaCancelacion(LocalDate.now());
+                    inscripcion.setMotivoCancelacion("Programa finalizado");
+                    inscripcionRepository.save(inscripcion);
+                }
+            }
+        }
 
         return programaRepository.save(existente);
     }

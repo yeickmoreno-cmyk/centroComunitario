@@ -1,11 +1,16 @@
 package com.centrocomunitario.backend.service.impl;
 
 import com.centrocomunitario.backend.model.ActividadModel;
+import com.centrocomunitario.backend.model.InscripcionModel;
+import com.centrocomunitario.backend.model.SesionModel;
 import com.centrocomunitario.backend.repository.IActividades;
+import com.centrocomunitario.backend.repository.IInscripciones;
+import com.centrocomunitario.backend.repository.ISesiones;
 import com.centrocomunitario.backend.service.interfaces.IActividadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -15,6 +20,8 @@ import java.util.Optional;
 public class ActividadServiceImp implements IActividadService {
 
     private final IActividades actividadRepository;
+    private final IInscripciones inscripcionRepository;
+    private final ISesiones sesionRepository;
 
     @Override
     public ActividadModel crear(ActividadModel actividad) {
@@ -62,6 +69,8 @@ public class ActividadServiceImp implements IActividadService {
         ActividadModel existente = actividadRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Actividad no encontrada con id: " + id));
 
+        String estadoAnterior = existente.getEstado();
+
         existente.setNombre(actividad.getNombre());
         existente.setCategoria(actividad.getCategoria());
         existente.setDescripcion(actividad.getDescripcion());
@@ -73,6 +82,26 @@ public class ActividadServiceImp implements IActividadService {
         existente.setCuposDisponibles(actividad.getCuposDisponibles());
         existente.setEstado(actividad.getEstado());
         existente.setRecursosRequeridos(actividad.getRecursosRequeridos());
+
+        if (!"cancelada".equals(estadoAnterior) && "cancelada".equals(existente.getEstado())) {
+            List<InscripcionModel> inscripciones = inscripcionRepository.findByReferenciaId(id);
+            for (InscripcionModel inscripcion : inscripciones) {
+                if ("activa".equals(inscripcion.getEstado())) {
+                    inscripcion.setEstado("cancelada");
+                    inscripcion.setFechaCancelacion(LocalDate.now());
+                    inscripcion.setMotivoCancelacion("Actividad cancelada");
+                    inscripcionRepository.save(inscripcion);
+                }
+            }
+
+            List<SesionModel> sesiones = sesionRepository.findByActividadId(id);
+            for (SesionModel sesion : sesiones) {
+                if (!"finalizada".equals(sesion.getEstado()) && !"cancelada".equals(sesion.getEstado())) {
+                    sesion.setEstado("cancelada");
+                    sesionRepository.save(sesion);
+                }
+            }
+        }
 
         return actividadRepository.save(existente);
     }

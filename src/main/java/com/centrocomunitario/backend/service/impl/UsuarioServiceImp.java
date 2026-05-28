@@ -1,11 +1,16 @@
 package com.centrocomunitario.backend.service.impl;
 
+import com.centrocomunitario.backend.model.InscripcionModel;
+import com.centrocomunitario.backend.model.ProgramaModel;
 import com.centrocomunitario.backend.model.UsuarioModel;
+import com.centrocomunitario.backend.repository.IInscripciones;
+import com.centrocomunitario.backend.repository.IProgramas;
 import com.centrocomunitario.backend.repository.IUsuarios;
 import com.centrocomunitario.backend.service.interfaces.IUsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -18,14 +23,14 @@ import java.util.Optional;
 public class UsuarioServiceImp implements IUsuarioService {
 
     private final IUsuarios usuarioRepository;
+    private final IInscripciones inscripcionRepository;
+    private final IProgramas programaRepository;
 
     @Override
     public UsuarioModel crear(UsuarioModel usuario) {
-        // Validar que el correo no exista
         if (usuarioRepository.findByCorreo(usuario.getCorreo()).isPresent()) {
             throw new IllegalArgumentException("Ya existe un usuario con el correo: " + usuario.getCorreo());
         }
-        // Validar que el documento no exista
         if (usuarioRepository.findByDocumentoId(usuario.getDocumentoId()).isPresent()) {
             throw new IllegalArgumentException("Ya existe un usuario con el documento: " + usuario.getDocumentoId());
         }
@@ -62,6 +67,8 @@ public class UsuarioServiceImp implements IUsuarioService {
         UsuarioModel existente = usuarioRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado con id: " + id));
 
+        String estadoAnterior = existente.getEstado();
+
         existente.setNombreCompleto(usuario.getNombreCompleto());
         existente.setEdad(usuario.getEdad());
         existente.setCorreo(usuario.getCorreo());
@@ -70,6 +77,22 @@ public class UsuarioServiceImp implements IUsuarioService {
         existente.setRol(usuario.getRol());
         existente.setEstado(usuario.getEstado());
         existente.setNotificaciones(usuario.getNotificaciones());
+
+        if (!"inactivo".equals(estadoAnterior) && "inactivo".equals(existente.getEstado())) {
+            List<InscripcionModel> inscripciones = inscripcionRepository.findByUsuarioIdAndEstado(id, "activa");
+            for (InscripcionModel inscripcion : inscripciones) {
+                inscripcion.setEstado("cancelada");
+                inscripcion.setFechaCancelacion(LocalDate.now());
+                inscripcion.setMotivoCancelacion("Usuario desactivado");
+                inscripcionRepository.save(inscripcion);
+            }
+
+            List<ProgramaModel> programas = programaRepository.findByResponsablesIdContaining(id);
+            for (ProgramaModel programa : programas) {
+                programa.getResponsablesId().remove(id);
+                programaRepository.save(programa);
+            }
+        }
 
         return usuarioRepository.save(existente);
     }
