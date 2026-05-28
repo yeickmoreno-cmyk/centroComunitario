@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Colección: usuarios
  * Roles disponibles: participante, instructor, coordinador, administrador
  */
 @Data

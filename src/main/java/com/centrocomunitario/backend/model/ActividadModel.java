@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Colección: actividades
  * Categorías: arte, deporte, tecnologia, salud, emprendimiento, desarrollo personal
  * Estados: pendiente_revision, aprobada, programada, en_curso, finalizada, cancelada
  */

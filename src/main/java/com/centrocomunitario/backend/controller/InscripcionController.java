@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Controlador REST para la colección 'inscripciones'.
  * Base URL: /centrocomunitario/api/inscripciones
  */
 @RestController
@@ -47,6 +46,18 @@ public class InscripcionController {
             @PathVariable String id,
             @Valid @RequestBody InscripcionModel inscripcion) {
         return ResponseEntity.ok(inscripcionService.actualizar(id, inscripcion));
+    }
+
+    // GET /inscripciones/usuario/{usuarioId}
+    @GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<List<InscripcionModel>> buscarPorUsuario(@PathVariable String usuarioId) {
+        return ResponseEntity.ok(inscripcionService.buscarPorUsuario(usuarioId));
+    }
+
+    // GET /inscripciones/estado/{estado}
+    @GetMapping("/estado/{estado}")
+    public ResponseEntity<List<InscripcionModel>> buscarPorEstado(@PathVariable String estado) {
+        return ResponseEntity.ok(inscripcionService.buscarPorEstado(estado));
     }
 
 //    // DELETE /inscripciones/eliminar/{id}

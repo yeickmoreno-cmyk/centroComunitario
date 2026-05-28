@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Controlador REST para la colección 'evaluaciones'.
  * Base URL: /centrocomunitario/api/evaluaciones
  */
 @RestController
@@ -47,6 +46,18 @@ public class EvaluacionController {
             @PathVariable String id,
             @Valid @RequestBody EvaluacionModel evaluacion) {
         return ResponseEntity.ok(evaluacionService.actualizar(id, evaluacion));
+    }
+
+    // GET /evaluaciones/actividad/{actividadId}
+    @GetMapping("/actividad/{actividadId}")
+    public ResponseEntity<List<EvaluacionModel>> buscarPorActividad(@PathVariable String actividadId) {
+        return ResponseEntity.ok(evaluacionService.buscarPorActividad(actividadId));
+    }
+
+    // GET /evaluaciones/tipo/{tipo}
+    @GetMapping("/tipo/{tipo}")
+    public ResponseEntity<List<EvaluacionModel>> buscarPorTipo(@PathVariable String tipo) {
+        return ResponseEntity.ok(evaluacionService.buscarPorTipo(tipo));
     }
 
 //    // DELETE /evaluaciones/eliminar/{id}

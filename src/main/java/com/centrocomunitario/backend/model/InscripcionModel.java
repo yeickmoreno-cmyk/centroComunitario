@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.time.LocalDate;
 
 /**
- * Colección: inscripciones
  * tipo_inscripcion: actividad, programa
  * estado: activa, cancelada, completada
  */

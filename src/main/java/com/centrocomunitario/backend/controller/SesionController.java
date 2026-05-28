@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Controlador REST para la colección 'sesiones'.
  * Base URL: /centrocomunitario/api/sesiones
  */
 @RestController
@@ -61,6 +60,12 @@ public class SesionController {
     @GetMapping("/horario/{usuarioId}")
     public ResponseEntity<List<SesionModel>> horarioParticipante(@PathVariable String usuarioId) {
         return ResponseEntity.ok(sesionService.horarioParticipante(usuarioId));
+    }
+
+    // GET /sesiones/actividad/{actividadId}
+    @GetMapping("/actividad/{actividadId}")
+    public ResponseEntity<List<SesionModel>> buscarPorActividad(@PathVariable String actividadId) {
+        return ResponseEntity.ok(sesionService.buscarPorActividad(actividadId));
     }
 
 //    // DELETE /sesiones/eliminar/{id}

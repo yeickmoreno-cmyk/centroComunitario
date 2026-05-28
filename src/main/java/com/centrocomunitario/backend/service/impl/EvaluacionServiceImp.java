@@ -1,7 +1,10 @@
 package com.centrocomunitario.backend.service.impl;
 
 import com.centrocomunitario.backend.model.EvaluacionModel;
+import com.centrocomunitario.backend.model.UsuarioModel;
 import com.centrocomunitario.backend.repository.IEvaluaciones;
+import com.centrocomunitario.backend.repository.IInscripciones;
+import com.centrocomunitario.backend.repository.IUsuarios;
 import com.centrocomunitario.backend.service.interfaces.IEvaluacionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +18,8 @@ import java.util.Optional;
 public class EvaluacionServiceImp implements IEvaluacionService {
 
     private final IEvaluaciones evaluacionRepository;
+    private final IUsuarios usuarioRepository;
+    private final IInscripciones inscripcionRepository;
 
     @Override
     public EvaluacionModel crear(EvaluacionModel evaluacion) {
@@ -22,6 +27,36 @@ public class EvaluacionServiceImp implements IEvaluacionService {
                 && (evaluacion.getValoracionNumerica() < 0 || evaluacion.getValoracionNumerica() > 5)) {
             throw new IllegalArgumentException("La valoración numérica debe estar entre 0 y 5");
         }
+
+        // Verificar que el autor existe
+        UsuarioModel autor = usuarioRepository.findById(evaluacion.getAutorId())
+                .orElseThrow(() -> new NoSuchElementException(
+                        "Usuario (autor) no encontrado con id: " + evaluacion.getAutorId()));
+
+        // Si tipo = "evaluacion_participante"
+        if ("evaluacion_participante".equals(evaluacion.getTipo())) {
+            if (evaluacion.getActividadId() == null) {
+                throw new IllegalArgumentException("Las evaluaciones de participante requieren actividadId");
+            }
+            boolean inscrito = inscripcionRepository
+                    .findInscripcionActivaByUsuarioYReferencia(evaluacion.getAutorId(), evaluacion.getActividadId())
+                    .isPresent();
+            if (!inscrito) {
+                throw new IllegalArgumentException("El participante no está inscrito en la actividad a evaluar");
+            }
+        }
+
+        // Si tipo = "evaluacion_instructor"
+        if ("evaluacion_instructor".equals(evaluacion.getTipo())) {
+            if (!"instructor".equals(autor.getRol())) {
+                throw new IllegalArgumentException(
+                        "Solo los instructores pueden crear evaluaciones de tipo evaluacion_instructor");
+            }
+            if (evaluacion.getSujetoId() == null) {
+                throw new IllegalArgumentException("Las evaluaciones de instructor requieren sujetoId");
+            }
+        }
+
         return evaluacionRepository.save(evaluacion);
     }
 

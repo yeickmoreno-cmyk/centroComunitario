@@ -2,7 +2,11 @@ package com.centrocomunitario.backend.service.impl;
 
 import com.centrocomunitario.backend.model.AnuncioForoModel;
 import com.centrocomunitario.backend.model.Comentario;
+import com.centrocomunitario.backend.model.UsuarioModel;
+import com.centrocomunitario.backend.repository.IActividades;
 import com.centrocomunitario.backend.repository.IAnunciosForos;
+import com.centrocomunitario.backend.repository.IProgramas;
+import com.centrocomunitario.backend.repository.IUsuarios;
 import com.centrocomunitario.backend.service.interfaces.IAnuncioForoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,9 +21,38 @@ import java.util.Optional;
 public class AnuncioForoServiceImp implements IAnuncioForoService {
 
     private final IAnunciosForos anuncioForoRepository;
+    private final IUsuarios usuarioRepository;
+    private final IActividades actividadRepository;
+    private final IProgramas programaRepository;
 
     @Override
     public AnuncioForoModel crear(AnuncioForoModel anuncio) {
+        // Verificar que el autor existe
+        UsuarioModel autor = usuarioRepository.findById(anuncio.getAutorId())
+                .orElseThrow(() -> new NoSuchElementException(
+                        "Usuario (autor) no encontrado con id: " + anuncio.getAutorId()));
+
+        // Verificar que el autor tiene rol habilitado para publicar
+        String rol = autor.getRol();
+        if (!"instructor".equals(rol) && !"coordinador".equals(rol) && !"administrador".equals(rol)) {
+            throw new IllegalArgumentException(
+                    "Solo instructores, coordinadores o administradores pueden publicar anuncios o foros");
+        }
+
+        // Verificar que la actividad existe si se referencia
+        if (anuncio.getActividadId() != null) {
+            actividadRepository.findById(anuncio.getActividadId())
+                    .orElseThrow(() -> new NoSuchElementException(
+                            "Actividad no encontrada con id: " + anuncio.getActividadId()));
+        }
+
+        // Verificar que el programa existe si se referencia
+        if (anuncio.getProgramaId() != null) {
+            programaRepository.findById(anuncio.getProgramaId())
+                    .orElseThrow(() -> new NoSuchElementException(
+                            "Programa no encontrado con id: " + anuncio.getProgramaId()));
+        }
+
         return anuncioForoRepository.save(anuncio);
     }
 

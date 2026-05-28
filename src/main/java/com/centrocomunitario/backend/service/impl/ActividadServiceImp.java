@@ -36,6 +36,12 @@ public class ActividadServiceImp implements IActividadService {
         if (actividad.getCuposDisponibles() > actividad.getCupoMaximo()) {
             throw new IllegalArgumentException("Los cupos disponibles no pueden superar el cupo máximo");
         }
+        if (actividad.getPropuestoPor() != null) {
+            usuarioRepository.findById(actividad.getPropuestoPor())
+                    .orElseThrow(() -> new NoSuchElementException(
+                            "Usuario proponente no encontrado con id: "
+                            + actividad.getPropuestoPor()));
+        }
         return actividadRepository.save(actividad);
     }
 

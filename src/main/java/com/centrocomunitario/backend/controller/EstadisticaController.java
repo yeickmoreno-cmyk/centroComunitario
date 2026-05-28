@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Controlador REST para estadísticas generales del centro.
  * Base URL: /centrocomunitario/api/estadisticas
  * Uso previsto: administradores.
  */

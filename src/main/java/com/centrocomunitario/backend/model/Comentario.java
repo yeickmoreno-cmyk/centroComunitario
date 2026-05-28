@@ -7,10 +7,6 @@ import lombok.*;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * Documento embebido dentro de la colección 'anuncios_foros'.
- * Representa un comentario realizado en un anuncio o foro.
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

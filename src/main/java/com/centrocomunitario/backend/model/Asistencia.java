@@ -3,10 +3,7 @@ package com.centrocomunitario.backend.model;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-/**
- * Documento embebido dentro de la colección 'sesiones'.
- * Registra la asistencia de un usuario a una sesión.
- */
+/** Registra la asistencia de un usuario a una sesión.*/
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

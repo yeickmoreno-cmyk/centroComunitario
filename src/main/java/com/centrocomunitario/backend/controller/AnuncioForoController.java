@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Controlador REST para la colección 'anuncios_foros'.
  * Base URL: /centrocomunitario/api/anuncios-foros
  */
 @RestController
@@ -62,6 +61,18 @@ public class AnuncioForoController {
             @PathVariable String id,
             @Valid @RequestBody AnuncioForoModel anuncio) {
         return ResponseEntity.ok(anuncioForoService.actualizar(id, anuncio));
+    }
+
+    // GET /anuncios-foros/tipo/{tipo}
+    @GetMapping("/tipo/{tipo}")
+    public ResponseEntity<List<AnuncioForoModel>> buscarPorTipo(@PathVariable String tipo) {
+        return ResponseEntity.ok(anuncioForoService.buscarPorTipo(tipo));
+    }
+
+    // GET /anuncios-foros/actividad/{actividadId}
+    @GetMapping("/actividad/{actividadId}")
+    public ResponseEntity<List<AnuncioForoModel>> buscarPorActividad(@PathVariable String actividadId) {
+        return ResponseEntity.ok(anuncioForoService.buscarPorActividad(actividadId));
     }
 
 //    // DELETE /anuncios-foros/eliminar/{id}

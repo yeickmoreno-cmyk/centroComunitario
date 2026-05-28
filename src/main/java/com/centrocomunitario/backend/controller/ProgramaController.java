@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Controlador REST para la colección 'programas'.
  * Base URL: /centrocomunitario/api/programas
  */
 @RestController
@@ -47,6 +46,12 @@ public class ProgramaController {
             @PathVariable String id,
             @Valid @RequestBody ProgramaModel programa) {
         return ResponseEntity.ok(programaService.actualizar(id, programa));
+    }
+
+    // GET /programas/estado/{estado}
+    @GetMapping("/estado/{estado}")
+    public ResponseEntity<List<ProgramaModel>> buscarPorEstado(@PathVariable String estado) {
+        return ResponseEntity.ok(programaService.buscarPorEstado(estado));
     }
 
 //    // DELETE /programas/eliminar/{id}

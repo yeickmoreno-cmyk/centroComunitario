@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Controlador REST para la colección 'usuarios'.
  * Base URL: /centrocomunitario/api/usuarios
  */
 @RestController
@@ -62,6 +61,18 @@ public class UsuarioController {
             @PathVariable String id,
             @PathVariable String nid) {
         return ResponseEntity.ok(usuarioService.marcarLeida(id, nid));
+    }
+
+    // GET /usuarios/rol/{rol}
+    @GetMapping("/rol/{rol}")
+    public ResponseEntity<List<UsuarioModel>> buscarPorRol(@PathVariable String rol) {
+        return ResponseEntity.ok(usuarioService.buscarPorRol(rol));
+    }
+
+    // GET /usuarios/nombre?q={q}
+    @GetMapping("/nombre")
+    public ResponseEntity<List<UsuarioModel>> buscarPorNombre(@RequestParam("q") String q) {
+        return ResponseEntity.ok(usuarioService.buscarPorNombre(q));
     }
 
 //    // DELETE /usuarios/eliminar/{id}

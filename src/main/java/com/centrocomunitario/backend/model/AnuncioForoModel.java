@@ -10,9 +10,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * Colección: anuncios_foros
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

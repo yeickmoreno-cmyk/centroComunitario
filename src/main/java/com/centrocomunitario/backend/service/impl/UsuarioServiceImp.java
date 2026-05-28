@@ -71,6 +71,13 @@ public class UsuarioServiceImp implements IUsuarioService {
 
         String estadoAnterior = existente.getEstado();
 
+        usuarioRepository.findByCorreo(usuario.getCorreo()).ifPresent(otro -> {
+            if (!otro.getId().equals(id)) {
+                throw new IllegalArgumentException(
+                        "Ya existe otro usuario con el correo: " + usuario.getCorreo());
+            }
+        });
+
         existente.setNombreCompleto(usuario.getNombreCompleto());
         existente.setEdad(usuario.getEdad());
         existente.setCorreo(usuario.getCorreo());

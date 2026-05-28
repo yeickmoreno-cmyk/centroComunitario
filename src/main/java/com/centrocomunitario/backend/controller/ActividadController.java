@@ -49,6 +49,24 @@ public class ActividadController {
         return ResponseEntity.ok(actividadService.actualizar(id, actividad));
     }
 
+    // GET /actividades/categoria/{categoria}
+    @GetMapping("/categoria/{categoria}")
+    public ResponseEntity<List<ActividadModel>> buscarPorCategoria(@PathVariable String categoria) {
+        return ResponseEntity.ok(actividadService.buscarPorCategoria(categoria));
+    }
+
+    // GET /actividades/estado/{estado}
+    @GetMapping("/estado/{estado}")
+    public ResponseEntity<List<ActividadModel>> buscarPorEstado(@PathVariable String estado) {
+        return ResponseEntity.ok(actividadService.buscarPorEstado(estado));
+    }
+
+    // GET /actividades/con-cupos
+    @GetMapping("/con-cupos")
+    public ResponseEntity<List<ActividadModel>> listarConCupos() {
+        return ResponseEntity.ok(actividadService.listarConCuposDisponibles());
+    }
+
 //    // DELETE /actividades/eliminar/{id}
 //    @DeleteMapping("/eliminar/{id}")
 //    public ResponseEntity<Void> eliminar(@PathVariable String id) {

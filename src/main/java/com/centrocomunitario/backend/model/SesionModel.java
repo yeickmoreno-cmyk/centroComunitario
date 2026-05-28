@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Colección: sesiones
  * Modalidades: presencial, virtual, hibrida
  * Estados: programada, en_curso, finalizada, cancelada
  */

@@ -1,8 +1,10 @@
 package com.centrocomunitario.backend.service.impl;
 
+import com.centrocomunitario.backend.model.ActividadModel;
 import com.centrocomunitario.backend.model.InscripcionModel;
 import com.centrocomunitario.backend.model.SesionModel;
 import com.centrocomunitario.backend.model.UsuarioModel;
+import com.centrocomunitario.backend.repository.IActividades;
 import com.centrocomunitario.backend.repository.IInscripciones;
 import com.centrocomunitario.backend.repository.ISesiones;
 import com.centrocomunitario.backend.repository.IUsuarios;
@@ -22,9 +24,35 @@ public class SesionServiceImp implements ISesionService {
     private final ISesiones sesionRepository;
     private final IUsuarios usuarioRepository;
     private final IInscripciones inscripcionRepository;
+    private final IActividades actividadRepository;
 
     @Override
     public SesionModel crear(SesionModel sesion) {
+        // Verificar que la actividad existe
+        ActividadModel actividad = actividadRepository.findById(sesion.getActividadId())
+                .orElseThrow(() -> new NoSuchElementException(
+                        "Actividad no encontrada con id: " + sesion.getActividadId()));
+
+        // Verificar que la actividad no está cancelada ni finalizada
+        if ("cancelada".equals(actividad.getEstado()) || "finalizada".equals(actividad.getEstado())) {
+            throw new IllegalArgumentException(
+                    "No se puede crear una sesión para una actividad cancelada o finalizada");
+        }
+
+        // Verificar que hora_fin > hora_inicio (comparación lexicográfica válida para HH:mm)
+        if (sesion.getHoraFin().compareTo(sesion.getHoraInicio()) <= 0) {
+            throw new IllegalArgumentException("La hora de fin debe ser posterior a la hora de inicio");
+        }
+
+        // Verificar que no existe ya una sesión con el mismo numero_sesion para esa actividad
+        boolean duplicado = sesionRepository
+                .findByActividadIdOrderByNumeroSesionAsc(sesion.getActividadId())
+                .stream()
+                .anyMatch(s -> s.getNumeroSesion().equals(sesion.getNumeroSesion()));
+        if (duplicado) {
+            throw new IllegalArgumentException("Ya existe una sesión con ese número para esta actividad");
+        }
+
         return sesionRepository.save(sesion);
     }
 

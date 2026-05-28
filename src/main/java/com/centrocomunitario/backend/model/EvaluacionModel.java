@@ -8,10 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDate;
 
-/**
- * Colección: evaluaciones
- * tipo: evaluacion_participante, evaluacion_instructor
- */
+/**tipo: evaluacion_participante, evaluacion_instructor*/
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

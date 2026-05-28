@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 /**
- * Documento embebido dentro de la colección 'actividades'.
  * Representa un recurso requerido para la actividad.
  */
 @Data

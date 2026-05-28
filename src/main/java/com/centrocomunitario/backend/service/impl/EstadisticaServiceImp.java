@@ -46,7 +46,8 @@ public class EstadisticaServiceImp implements IEstadisticaService {
 
         Map<String, Long> mapa = new LinkedHashMap<>();
         for (Document doc : resultados) {
-            String clave = doc.getString("_id");
+            Object claveObj = doc.get("_id");
+            String clave = claveObj != null ? claveObj.toString() : null;
             Object totalObj = doc.get("total");
             long total = totalObj != null ? ((Number) totalObj).longValue() : 0L;
             if (clave != null) {
@@ -71,7 +72,8 @@ public class EstadisticaServiceImp implements IEstadisticaService {
 
         List<PromedioValoracionDto> lista = new ArrayList<>();
         for (Document doc : resultados) {
-            String actividadId = doc.getString("_id");
+            Object idObj = doc.get("_id");
+            String actividadId = idObj != null ? idObj.toString() : null;
             Object promedioObj = doc.get("promedio");
             double promedio = promedioObj != null ? ((Number) promedioObj).doubleValue() : 0.0;
             if (actividadId != null) {

@@ -8,7 +8,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.time.LocalDate;
 
 /**
- * Documento embebido dentro de la colección 'usuarios'.
  * Representa una notificación individual del usuario.
  */
 @Data
