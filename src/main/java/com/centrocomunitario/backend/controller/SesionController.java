@@ -49,6 +49,20 @@ public class SesionController {
         return ResponseEntity.ok(sesionService.actualizar(id, sesion));
     }
 
+    // PUT /sesiones/{id}/asignar-instructor?instructorId=xxx
+    @PutMapping("/{id}/asignar-instructor")
+    public ResponseEntity<SesionModel> asignarInstructor(
+            @PathVariable String id,
+            @RequestParam String instructorId) {
+        return ResponseEntity.ok(sesionService.asignarInstructor(id, instructorId));
+    }
+
+    // GET /sesiones/horario/{usuarioId}
+    @GetMapping("/horario/{usuarioId}")
+    public ResponseEntity<List<SesionModel>> horarioParticipante(@PathVariable String usuarioId) {
+        return ResponseEntity.ok(sesionService.horarioParticipante(usuarioId));
+    }
+
 //    // DELETE /sesiones/eliminar/{id}
 //    @DeleteMapping("/eliminar/{id}")
 //    public ResponseEntity<Void> eliminar(@PathVariable String id) {

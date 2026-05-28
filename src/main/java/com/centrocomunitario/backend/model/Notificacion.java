@@ -3,6 +3,7 @@ package com.centrocomunitario.backend.model;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDate;
 
@@ -15,6 +16,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class Notificacion {
+
+    /** Identificador único generado automáticamente para poder marcar como leída */
+    @Field("notificacion_id")
+    private String notificacionId;
 
     @NotBlank(message = "El mensaje no puede estar vacío")
     private String mensaje;

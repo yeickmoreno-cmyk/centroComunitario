@@ -1,5 +1,6 @@
 package com.centrocomunitario.backend.controller;
 
+import com.centrocomunitario.backend.model.Notificacion;
 import com.centrocomunitario.backend.model.UsuarioModel;
 import com.centrocomunitario.backend.service.interfaces.IUsuarioService;
 import jakarta.validation.Valid;
@@ -47,6 +48,20 @@ public class UsuarioController {
             @PathVariable String id,
             @Valid @RequestBody UsuarioModel usuario) {
         return ResponseEntity.ok(usuarioService.actualizar(id, usuario));
+    }
+
+    // GET /usuarios/{id}/notificaciones
+    @GetMapping("/{id}/notificaciones")
+    public ResponseEntity<List<Notificacion>> listarNotificaciones(@PathVariable String id) {
+        return ResponseEntity.ok(usuarioService.listarNotificaciones(id));
+    }
+
+    // PUT /usuarios/{id}/notificaciones/{nid}/leer
+    @PutMapping("/{id}/notificaciones/{nid}/leer")
+    public ResponseEntity<UsuarioModel> marcarLeida(
+            @PathVariable String id,
+            @PathVariable String nid) {
+        return ResponseEntity.ok(usuarioService.marcarLeida(id, nid));
     }
 
 //    // DELETE /usuarios/eliminar/{id}

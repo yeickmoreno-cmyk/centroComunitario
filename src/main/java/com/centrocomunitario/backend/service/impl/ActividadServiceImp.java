@@ -2,18 +2,22 @@ package com.centrocomunitario.backend.service.impl;
 
 import com.centrocomunitario.backend.model.ActividadModel;
 import com.centrocomunitario.backend.model.InscripcionModel;
+import com.centrocomunitario.backend.model.Notificacion;
 import com.centrocomunitario.backend.model.SesionModel;
 import com.centrocomunitario.backend.repository.IActividades;
 import com.centrocomunitario.backend.repository.IInscripciones;
 import com.centrocomunitario.backend.repository.ISesiones;
+import com.centrocomunitario.backend.repository.IUsuarios;
 import com.centrocomunitario.backend.service.interfaces.IActividadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +26,7 @@ public class ActividadServiceImp implements IActividadService {
     private final IActividades actividadRepository;
     private final IInscripciones inscripcionRepository;
     private final ISesiones sesionRepository;
+    private final IUsuarios usuarioRepository;
 
     @Override
     public ActividadModel crear(ActividadModel actividad) {
@@ -83,7 +88,10 @@ public class ActividadServiceImp implements IActividadService {
         existente.setEstado(actividad.getEstado());
         existente.setRecursosRequeridos(actividad.getRecursosRequeridos());
 
+        // Cascada: actividad cancelada
         if (!"cancelada".equals(estadoAnterior) && "cancelada".equals(existente.getEstado())) {
+            final String nombreActividad = existente.getNombre();
+
             List<InscripcionModel> inscripciones = inscripcionRepository.findByReferenciaId(id);
             for (InscripcionModel inscripcion : inscripciones) {
                 if ("activa".equals(inscripcion.getEstado())) {
@@ -91,6 +99,22 @@ public class ActividadServiceImp implements IActividadService {
                     inscripcion.setFechaCancelacion(LocalDate.now());
                     inscripcion.setMotivoCancelacion("Actividad cancelada");
                     inscripcionRepository.save(inscripcion);
+
+                    // Notificar al usuario inscrito
+                    usuarioRepository.findById(inscripcion.getUsuarioId()).ifPresent(usuario -> {
+                        Notificacion notif = Notificacion.builder()
+                                .notificacionId(UUID.randomUUID().toString())
+                                .mensaje("La actividad '" + nombreActividad
+                                        + "' ha sido cancelada. Tu inscripción fue cancelada automáticamente.")
+                                .fecha(LocalDate.now())
+                                .leida(false)
+                                .build();
+                        if (usuario.getNotificaciones() == null) {
+                            usuario.setNotificaciones(new ArrayList<>());
+                        }
+                        usuario.getNotificaciones().add(notif);
+                        usuarioRepository.save(usuario);
+                    });
                 }
             }
 

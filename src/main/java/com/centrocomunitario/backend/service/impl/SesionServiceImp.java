@@ -1,7 +1,11 @@
 package com.centrocomunitario.backend.service.impl;
 
+import com.centrocomunitario.backend.model.InscripcionModel;
 import com.centrocomunitario.backend.model.SesionModel;
+import com.centrocomunitario.backend.model.UsuarioModel;
+import com.centrocomunitario.backend.repository.IInscripciones;
 import com.centrocomunitario.backend.repository.ISesiones;
+import com.centrocomunitario.backend.repository.IUsuarios;
 import com.centrocomunitario.backend.service.interfaces.ISesionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -9,12 +13,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class SesionServiceImp implements ISesionService {
 
     private final ISesiones sesionRepository;
+    private final IUsuarios usuarioRepository;
+    private final IInscripciones inscripcionRepository;
 
     @Override
     public SesionModel crear(SesionModel sesion) {
@@ -47,6 +54,7 @@ public class SesionServiceImp implements ISesionService {
                 .orElseThrow(() -> new NoSuchElementException("Sesión no encontrada con id: " + id));
 
         existente.setActividadId(sesion.getActividadId());
+        existente.setInstructorId(sesion.getInstructorId());
         existente.setNumeroSesion(sesion.getNumeroSesion());
         existente.setFecha(sesion.getFecha());
         existente.setHoraInicio(sesion.getHoraInicio());
@@ -67,5 +75,34 @@ public class SesionServiceImp implements ISesionService {
             throw new NoSuchElementException("Sesión no encontrada con id: " + id);
         }
         sesionRepository.deleteById(id);
+    }
+
+    @Override
+    public SesionModel asignarInstructor(String sesionId, String instructorId) {
+        SesionModel sesion = sesionRepository.findById(sesionId)
+                .orElseThrow(() -> new NoSuchElementException("Sesión no encontrada con id: " + sesionId));
+
+        UsuarioModel instructor = usuarioRepository.findById(instructorId)
+                .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado con id: " + instructorId));
+
+        if (!"instructor".equals(instructor.getRol())) {
+            throw new IllegalArgumentException(
+                    "El usuario '" + instructor.getNombreCompleto() + "' no tiene rol de instructor");
+        }
+
+        sesion.setInstructorId(instructorId);
+        return sesionRepository.save(sesion);
+    }
+
+    @Override
+    public List<SesionModel> horarioParticipante(String usuarioId) {
+        List<InscripcionModel> inscripciones = inscripcionRepository
+                .findByUsuarioIdAndEstado(usuarioId, "activa");
+
+        return inscripciones.stream()
+                .filter(i -> "actividad".equals(i.getTipoInscripcion()))
+                .flatMap(i -> sesionRepository
+                        .findByActividadIdOrderByNumeroSesionAsc(i.getReferenciaId()).stream())
+                .collect(Collectors.toList());
     }
 }

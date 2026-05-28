@@ -30,6 +30,10 @@ public class SesionModel {
     @Field("actividad_id")
     private String actividadId;
 
+    /** FK -> usuarios._id (rol: instructor) — asignado por un coordinador */
+    @Field("instructor_id")
+    private String instructorId;
+
     @NotNull(message = "El número de sesión es obligatorio")
     @Field("numero_sesion")
     private Integer numeroSesion;

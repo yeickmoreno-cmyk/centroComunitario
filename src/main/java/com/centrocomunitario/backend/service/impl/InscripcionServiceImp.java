@@ -1,30 +1,55 @@
 package com.centrocomunitario.backend.service.impl;
 
 import com.centrocomunitario.backend.model.InscripcionModel;
+import com.centrocomunitario.backend.model.Notificacion;
+import com.centrocomunitario.backend.model.UsuarioModel;
 import com.centrocomunitario.backend.repository.IInscripciones;
+import com.centrocomunitario.backend.repository.IUsuarios;
 import com.centrocomunitario.backend.service.interfaces.IInscripcionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class InscripcionServiceImp implements IInscripcionService {
 
     private final IInscripciones inscripcionRepository;
+    private final IUsuarios usuarioRepository;
 
     @Override
     public InscripcionModel crear(InscripcionModel inscripcion) {
-        // Validar que no exista una inscripción activa duplicada
         inscripcionRepository
                 .findInscripcionActivaByUsuarioYReferencia(inscripcion.getUsuarioId(), inscripcion.getReferenciaId())
                 .ifPresent(i -> {
                     throw new IllegalArgumentException("El usuario ya tiene una inscripción activa en esta referencia");
                 });
-        return inscripcionRepository.save(inscripcion);
+
+        InscripcionModel guardada = inscripcionRepository.save(inscripcion);
+
+        // Notificar al usuario sobre su nueva inscripción
+        usuarioRepository.findById(inscripcion.getUsuarioId()).ifPresent(usuario -> {
+            Notificacion notif = Notificacion.builder()
+                    .notificacionId(UUID.randomUUID().toString())
+                    .mensaje("Te has inscrito exitosamente. Tipo de inscripción: "
+                            + inscripcion.getTipoInscripcion() + ".")
+                    .fecha(LocalDate.now())
+                    .leida(false)
+                    .build();
+            if (usuario.getNotificaciones() == null) {
+                usuario.setNotificaciones(new ArrayList<>());
+            }
+            usuario.getNotificaciones().add(notif);
+            usuarioRepository.save(usuario);
+        });
+
+        return guardada;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.centrocomunitario.backend.service.impl;
 
 import com.centrocomunitario.backend.model.InscripcionModel;
+import com.centrocomunitario.backend.model.Notificacion;
 import com.centrocomunitario.backend.model.ProgramaModel;
 import com.centrocomunitario.backend.model.UsuarioModel;
 import com.centrocomunitario.backend.repository.IInscripciones;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -78,6 +80,7 @@ public class UsuarioServiceImp implements IUsuarioService {
         existente.setEstado(usuario.getEstado());
         existente.setNotificaciones(usuario.getNotificaciones());
 
+        // Cascada: desactivar usuario
         if (!"inactivo".equals(estadoAnterior) && "inactivo".equals(existente.getEstado())) {
             List<InscripcionModel> inscripciones = inscripcionRepository.findByUsuarioIdAndEstado(id, "activa");
             for (InscripcionModel inscripcion : inscripciones) {
@@ -86,7 +89,6 @@ public class UsuarioServiceImp implements IUsuarioService {
                 inscripcion.setMotivoCancelacion("Usuario desactivado");
                 inscripcionRepository.save(inscripcion);
             }
-
             List<ProgramaModel> programas = programaRepository.findByResponsablesIdContaining(id);
             for (ProgramaModel programa : programas) {
                 programa.getResponsablesId().remove(id);
@@ -103,5 +105,32 @@ public class UsuarioServiceImp implements IUsuarioService {
             throw new NoSuchElementException("Usuario no encontrado con id: " + id);
         }
         usuarioRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Notificacion> listarNotificaciones(String usuarioId) {
+        UsuarioModel usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado con id: " + usuarioId));
+        List<Notificacion> notificaciones = usuario.getNotificaciones();
+        return notificaciones != null ? notificaciones : new ArrayList<>();
+    }
+
+    @Override
+    public UsuarioModel marcarLeida(String usuarioId, String notificacionId) {
+        UsuarioModel usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado con id: " + usuarioId));
+
+        if (usuario.getNotificaciones() == null) {
+            throw new NoSuchElementException("No se encontró la notificación con id: " + notificacionId);
+        }
+
+        usuario.getNotificaciones().stream()
+                .filter(n -> notificacionId.equals(n.getNotificacionId()))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException(
+                        "No se encontró la notificación con id: " + notificacionId))
+                .setLeida(true);
+
+        return usuarioRepository.save(usuario);
     }
 }

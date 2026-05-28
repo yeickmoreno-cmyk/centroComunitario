@@ -20,4 +20,10 @@ public interface ISesionService {
     SesionModel actualizar(String id, SesionModel sesion);
 
     void eliminar(String id);
+
+    /** Asigna un instructor (rol='instructor') a una sesión */
+    SesionModel asignarInstructor(String sesionId, String instructorId);
+
+    /** Devuelve las sesiones de las actividades en las que el usuario está inscrito activamente */
+    List<SesionModel> horarioParticipante(String usuarioId);
 }

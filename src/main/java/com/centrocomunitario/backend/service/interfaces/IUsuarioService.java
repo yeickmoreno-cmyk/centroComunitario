@@ -1,5 +1,6 @@
 package com.centrocomunitario.backend.service.interfaces;
 
+import com.centrocomunitario.backend.model.Notificacion;
 import com.centrocomunitario.backend.model.UsuarioModel;
 
 import java.util.List;
@@ -25,4 +26,10 @@ public interface IUsuarioService {
     UsuarioModel actualizar(String id, UsuarioModel usuario);
 
     void eliminar(String id);
+
+    /** Devuelve la lista de notificaciones del usuario */
+    List<Notificacion> listarNotificaciones(String usuarioId);
+
+    /** Marca una notificación como leída (identificada por notificacionId) */
+    UsuarioModel marcarLeida(String usuarioId, String notificacionId);
 }
